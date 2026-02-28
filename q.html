@@ -1,12 +1,976 @@
-<html>
- <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Пример веб-страницы</title>
- </head>
- <body>
-  <h1>Заголовок</h1>
-  <!-- Комментарий -->
-  <p>Первый абзац.</p>
-  <p>Второй абзац.</p>
- </body>
-</html>
+<h3><span style="color: #c8196b;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Структуры</span></strong></span><span
+    style="color: #c8196b;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">
+        данных в Pandas: Series и DataFrame</span></strong></span></h3>
+<h3> </h3>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Библиотека
+    Pandas предоставляет две структуры:<span style="color: #333399;">
+      Series</span> и <span style="color: #333399;">DataFrame</span> для быстрой
+    и удобной работы с данными. Ранее использовалась еще одна структура - <span
+      style="color: #333399;">Panel</span>, но в данный момент она имеет статус
+    deprecated (устарело) и в будущем будет исключена из состава библиотеки<span
+      style="color: #333399;"> Рandas</span>.</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><span
+      style="color: #333399;"> Series</span> - это маркированная одномерная
+    структура данных, ее можно представить, как таблицу с одной строкой (или
+    столбцом). С<span style="color: #333399;"> Series</span> можно работать как
+    с обычным массивом (обращаться по номеру индекса), и как с ассоциированным
+    массивом (можно использовать ключ для доступа к элементам данных). </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><span
+      style="color: #333399;">DataFrame</span> - это двумерная маркированная
+    структура. По сути, это обычная таблица, что выражается в способе ее
+    создания и работе с ее элементами. </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><span
+      style="color: #333399;">Panel</span> - представляет собой трехмерную
+    структуру данных. Рассматривать этот объект мы не будем, сосредоточимся
+    на создании и получении доступа к элементам данных структур <span
+      style="color: #333399;">Series</span> и <span
+      style="color: #333399;">DataFrame</span>. </span></p>
+<p></p>
+<p><strong><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large; color: #333399;">Структура
+      данных Series </span></strong></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Для
+    начала импортируем необходимые библиотеки: </span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; import pandas as pd</p>
+  <p>&gt;&gt;&gt; import numpy as np</p>
+</div>
+<p></p>
+<p id="43b5"
+  class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""><span class="lx ew"><em
+      class="lw"> </em></span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Создать
+    структуру Series можно на базе следующих типов данных:</span></p>
+<ul>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">словарь
+      (dict) Python;</span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">список
+      (list) Python;</span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">массив
+      ndarray (из библиотеки numpy);</span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">скалярная
+      величина. </span></li>
+</ul>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Конструктор
+    класса Series выглядит следующим образом: Series(data=<span
+      style="color: #000080;">None</span>, index=<span
+      style="color: #000080;">None</span>, dtype=<span
+      style="color: #000080;">None</span>, name=<span
+      style="color: #000080;">None</span>, copy=<span
+      style="color: #000080;">False</span>, fastpath=<span
+      style="color: #000080;">False</span>)</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><img
+      class="img-fluid"
+      src="https://sdo.eduprof.ru/draftfile.php/26455/user/draft/388528368/blobid0.png"
+      alt=""></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Рассмотрим
+    основные параметры конструктора:</span></p>
+<ul>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> data
+      — источник данных: массив, одно значение или dict (None по умолчанию); на
+      базе этой структуры создается Series. </span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> index
+      — одномерный список меток для элементов (None по умолчанию); длина должна
+      совпадать с data. </span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> dtype
+      — тип данных (numpy.dtype), по умолчанию определяется автоматически None.
+    </span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> copy
+      — если True, то создается копия массива данных (по умолчанию False).
+      Обычно достаточно указать только data и index.</span></li>
+</ul>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">В
+    большинстве случаев, при создании Series, используют только первые два
+    параметра.</span></p>
+<p><span style="color: #000080;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif;">Создание
+        Series из списка Python </span></strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Самый
+    простой способ создать <span style="color: #000080;">Series</span> - это
+    передать в качестве единственного параметра в конструктор список Python:
+  </span></p>
+<p></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s1 = pd.Series([1, 2, 3, 4, 5])</p>
+  <p>&gt;&gt;&gt; s1</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">
+    0 1 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">1
+    2 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">2
+    3 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">3
+    4 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">4
+    5 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">В
+    этом примере Series построен на базе списка из языка Python. В левой колонке
+    отображаются целочисленные индексы (начинающиеся с нуля), правая колонка
+    содержит сами значения. </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Для
+    доступа к элементам Series, в данном случае, можно использовать индексы
+    элементов структуры.</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Передадим
+    в качестве второго элемента список строк (в нашем случае это отдельные
+    символы). Это позволит обращаться к элементам структуры Series не только по
+    численному индексу, но и по метке, это делает объект, похожим на
+    словарь:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s2 = pd.Series([1, 2, 3, 4, 5], ['a', 'b', 'c', 'd', 'e'])</p>
+  <p>&gt;&gt;&gt; print(s2)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a  </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">1</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">2</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">3</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">d 4</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">e 
+    5 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Обратите
+    внимание на левый столбец, в нем содержатся метки, которые мы передали в
+    качестве index-параметра при создании структуры. Правый столбец - это
+    по-прежнему элементы структуры.</span></p>
+<p></p>
+<p></p>
+<p><span
+    style="color: #000080; font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>Создание
+      Series из ndarray массива numpy </strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Создадим
+    массив ndarray из пяти чисел, аналогичный предыдущему списку. Предварительно
+    импортируем библиотеки Рandas и Numpy:</span></p>
+<p></p>
+<p></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; <span
+      class="prism-token prism-keyword">import</span> numpy <span
+      class="prism-token prism-keyword">as</span> np <span
+      class="prism-token prism-keyword">import</span> pandas <span
+      class="prism-token prism-keyword">as</span> pd</p>
+  <p>&gt;&gt;&gt; ndarr = np.array([1, 2, 3, 4, 5])</p>
+  <p>&gt;&gt;&gt; type(ndarr)  <code> </code></p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">&lt;class
+    'numpy.ndarray'=""&gt;</span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Теперь
+    создадим Series с буквенными метками: </span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s3 = pd.Series(ndarr, ['a', 'b', 'c', 'd', 'e'])</p>
+  <p>&gt;&gt;&gt; print(s3)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a  1 </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b 2</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c 3</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">d 4</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">e 
+    5</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Как
+    видим, Series, созданный из ndarray, аналогичен Series, созданному из списка
+    Python.</span></p>
+<p></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong><span
+        style="color: #000080;">Создание Series из словаря (dict)
+      </span></strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Еще
+    один способ создать структуру Series - это использовать словарь для
+    одновременного задания меток и значений: </span></p>
+<p></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; d = {'a':1, 'b':2, 'c':3}</p>
+  <p>&gt;&gt;&gt; s4 = pd.Series(d)</p>
+  <p>&gt;&gt;&gt; print(s4)<code> </code></p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a  1 </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b 2</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c 3</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">d 4</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">e 
+    5</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Ключи
+    (keys) из словаря d станут метками структуры s4, а значения (values) словаря
+    — значениями.</span></p>
+<p></p>
+<p><span style="color: #000080;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Создание
+        Series с использованием константы</span></strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">
+    Рассмотрим следующий способ создания Series, при котором все элементы
+    структуры принимают одно и то же значение (константу):</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; a = 7</p>
+  <p>&gt;&gt;&gt; s5 = pd.Series(a, ['a', 'b', 'c'])</p>
+  <p>&gt;&gt;&gt; print(s5)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> a </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">7</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> b </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">7 </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> c
+    7 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> dtype:
+    int64 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">В
+    полученной структуре имеется три элемента с одинаковым содержанием.</span>
+</p>
+<p></p>
+<p></p>
+<p><span style="color: #000080;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Работа
+        с элементами Series </span></strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Рассмотрим
+    основные способы обращения к объекту Series в Рandas.</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">
+    К элементам Series следует обращаться по численному индексу, при таком
+    подходе работа со структурой не отличается от работы со списками в Python.
+    Создадим примерную структуру  Series: </span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6 = pd.Series([1, 2, 3, 4, 5], ['a', 'b', 'c', 'd', 'e'])</p>
+  <p>&gt;&gt;&gt; s6[2]<span
+      style="color: #e83e8c; font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 14px;"> </span>
+  </p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">3</span>
+</p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Также
+    можно использовать обращение по метке, тогда работа с Series будет
+    аналогична работе со словарем (dict) в Python:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6['d']</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">4</span>
+</p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Доступен
+    синтаксис работы со срезами:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6[:2]</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a
+    1</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b
+    2 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64 </span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">В
+    поле для индекса возможно поместить условное выражение (Булева
+    фильтрация):</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6[s6 &lt;= 3]</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a
+    1</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">2</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c
+    3 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64 </span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Series
+    поддерживают поэлементные арифметические операции: операции сложения,
+    умножения вектора на число и т.п. применяются к соответствующим
+    элементам:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s7 = pd.Series([10, 20, 30, 40, 50], ['a', 'b', 'c', 'd',
+    'e'])</p>
+</div>
+<p></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">При
+    сложении структур, их элементы складываются между собой:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6 + s7</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a
+    11</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">22</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">33</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">d</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">44</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">e
+    55 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64</span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">При
+    умножении структуры на число, все элементы структуры умножаются на данный
+    множитель:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; s6 * 3</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">a
+    3</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">b</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">6</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">c</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">9</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">d</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">12</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">e
+    15 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtype:
+    int64 </span></p>
+<p></p>
+<p><strong><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large; color: #000080;">Структура
+      данных DataFrame </span></strong></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Если
+    Series представляет собой одномерную структуру, которую для себя можно
+    представить, как таблицу с одной строкой (или одним столбцом), то DataFrame
+    это уже двумерная структура - полноценная таблица с множеством строк и
+    столбцов. Конструктор класса DataFrame выглядит так: DataFrame(data=<span
+      style="color: #000080;">None</span>, index=<span
+      style="color: #000080;">None</span>, columns=<span
+      style="color: #000080;">None</span>, dtype=<span
+      style="color: #000080;">None</span>, copy=<span
+      style="color: #000080;">False</span>)</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><img
+      class="img-fluid"
+      src="https://sdo.eduprof.ru/draftfile.php/26455/user/draft/388528368/blobid1.png"
+      alt=""></span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Основные
+    параметры конструктора: </span></p>
+<ul>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>data</strong> (обязательный
+      в большинстве случаев): исходные данные для заполнения DataFrame. Может
+      принимать различные типы данных:</span>
+    <ul>
+      <li><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">numpy.ndarray (массив
+          структурированный или однородный)</span></li>
+      <li><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Iterable (итерируемый
+          объект)</span></li>
+      <li><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dict (словарь,
+          ключи которого становятся именами столбцов, а значения — данными
+          столбцов)</span></li>
+      <li><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">другой
+          DataFrame (pandas.DataFrame или pandas.Series)</span></li>
+      <li><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">список
+          словарей, список списков или другие подобные структуры.</span></li>
+    </ul>
+  </li>
+</ul>
+<p></p>
+<ul>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong><span
+          style="font-weight: bolder;">index</span><span
+          style="font-weight: 400;"> (необязательный): метки для использования в
+          качестве индекса (меток строк) результирующего DataFrame. Если не
+          указан, по умолчанию используется RangeIndex (числовой индекс от 0 до
+          N-1).</span></strong></span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>columns</strong> (необязательный):
+      метки столбцов для использования в результирующем DataFrame. Если данные
+      уже содержат метки столбцов (например, если data — это словарь), этот
+      параметр выполняет выборку столбцов. Если не указан, по умолчанию
+      используется RangeIndex.</span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>dtype</strong> (необязательный):
+      тип данных (dtype) для принудительного задания всем столбцам.
+      Если None (по умолчанию), типы данных будут выведены автоматически на
+      основе входных данных.</span></li>
+  <li><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>copy</strong> (необязательный):
+      логическое значение (bool), по умолчанию None (в старых версиях False).
+      Если True,</span>
+    <p><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">то
+        будет создана копия массива данных. Этот параметр в основном актуален,
+        если data уже является объектом DataFrame или двумерным
+        массивом ndarray. </span></p>
+  </li>
+</ul>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Рассмотрим
+    на практике различные подходы к созданию DataFrame’ов.</span></p>
+<p></p>
+<p><strong><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large; color: #000080;">Создание
+      DataFrame из словаря </span></strong></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Для
+    создания DataFrame используют словарь, элементами которого могут быть
+    списки, структуры Series и т.д. </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Рассмотрим </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">пример,
+    где элементы словаря — это структуры Series:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; d = {'price':pd.Series([1, 2, 3], index=['v1', 'v2',
+    'v3']),'count': pd.Series([10, 12, 7], index=['v1', 'v2', 'v3'])}</p>
+  <p>&gt;&gt;&gt; df1 = pd.DataFrame(d)</p>
+  <p>&gt;&gt;&gt; print(df1)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> 
+       price  count</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v1 
+      1      10 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v2 
+      </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">2 
+        12</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v3 
+      3       7</span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Следующей
+    командой выводятся на экран индексы созданного DataFrame в следующем
+    виде:</span></p>
+<div class="alert alert-primary" role="alert">
+  <pre
+    class="wp-block-code"><span style="color: #003366;"><code>&gt;&gt;&gt; print(df1.index) Index(['v1', 'v2', 'v3'], dtype='object')</code> </span></pre>
+</div>
+<p></p>
+<p id="43b5"
+  class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""><span class="lx ew"><em class="lw"> </em></span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Столбцы
+    созданного DataFrame выводятся командой:</span></p>
+<div class="alert alert-primary" role="alert">
+  <pre
+    class="wp-block-code"><span style="color: #003366;">&gt;&gt;&gt; print(df1.columns) Index(['price', 'count'], dtype='object')</span></pre>
+</div>
+<p></p>
+<p id="43b5"
+  class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Построим
+    аналогичный словарь, но используем элементы массива </span><span
+    style="color: #e83e8c; font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 15.75px;">ndarray</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">:</span>
+</p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; d2 = {'price':np.array([1, 2, 3]), 'count': np.array([10, 12,
+    7])}</p>
+  <p>&gt;&gt;&gt; df2 = pd.DataFrame(d2, index=['v1', 'v2', 'v3'])</p>
+  <p>&gt;&gt;&gt; print(df2)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результата
+    выполнения:</span></p>
+<p id="43b5"
+  class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">price
+    count</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v1</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">1
+    10</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v2</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">2
+    12</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">v3
+    3 7 </span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Индексы
+    и столбцы второго DataFrame выводятся :</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; print(df2.index) Index(['v1', 'v2', 'v3'], dtype='object')</p>
+  <p>&gt;&gt;&gt; print(df2.columns) Index(['price', 'count'], dtype='object')
+  </p>
+</div>
+<p></p>
+<p id="43b5"
+  class="pw-post-body-paragraph lu lv ev lx b ly lz ma mb mc md me mf mt mh mi mj mu ml mm mn mv mp mq mr ms eo bj"
+  data-selectable-paragraph=""><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Как
+    видно - результат аналогичен предыдущему. Таким образом, можно применять
+    обычные списки Python вместо <code
+      class="monospace-text">ndarray</code>.</span></p>
+<p></p>
+<p><strong><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large; color: #000080;">Создание
+      DataFrame из списка словарей </span></strong></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Создадим
+    DataFrame из списка, элементами которого являются словари:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; d3 = [{'price': 3, 'count':8}, {'price': 4, 'count': 11}]</p>
+  <p>&gt;&gt;&gt; df3 = pd.DataFrame(d3)</p>
+  <p>&gt;&gt;&gt; print(df3)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">count
+    price</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">0
+    8 3 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">1
+    11 4 </span></p>
+<p></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Для
+    получения сводной информации о созданном DataFrame применяется функция <code
+      class="monospace-text">info()</code>. Она отображает сведения о типе
+    структуры, количестве записей, количестве non-null элементов в столбцах,
+    типы и количество хранимых элементов и объеме используемой памяти:</span>
+</p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; print(df3.info())</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">&lt;class
+    'pandas.core.frame.dataframe'=""&gt;</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">
+    RangeIndex: 2 entries, 0 to 1 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Data
+    columns (total 2 columns): </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">count
+    2 non-null int64</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">price
+    2 non-null int64 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">dtypes:
+    int64(2) </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">memory
+    usage: 112.0 </span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">bytes</span>
+</p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">None
+  </span></p>
+<p></p>
+<p><span style="color: #333399;"><strong><span
+        style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Создание
+        DataFrame из двумерного массива </span></strong></span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">DataFrame
+    создается также из двумерного массива, в данном случае это </span><span
+    style="color: #e83e8c; font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 15.75px;">ndarray</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> из
+    библиотеки Numpy</span><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">:</span>
+</p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; nda1 = np.array([[1, 2, 3], [10, 20, 30]])</p>
+  <p>&gt;&gt;&gt; df4 = pd.DataFrame(nda1)</p>
+  <p>&gt;&gt;&gt; print(df4)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> 
+    0  1    2</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">0 
+     1  2   3 </span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">1
+    10 20 30</span></p>
+<p></p>
+<p><strong><span
+      style="font-family: verdana, arial, helvetica, sans-serif; font-size: large; color: #333399;">Работа
+      с элементами DataFrame </span></strong></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Рассмотрим
+    наиболее часто используемые подходы для доступа к элементам структуры.
+    Основные способы представлены в таблице:</span></p>
+<table style="height: 337px; width: 1024px;" border="5">
+  <tbody>
+    <tr>
+      <td style="text-align: center;"><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong>Операция  </strong></span>
+      </td>
+      <td style="text-align: center;"><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong> 
+             Синтаксис </strong></span></td>
+      <td style="text-align: center;"><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"><strong> 
+             Возвращаемый результат</strong></span></td>
+    </tr>
+    <tr>
+      <td><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Выбор
+          столбца</span></td>
+      <td style="text-align: center;"><span
+          style="font-size: large; font-family: 'courier new', courier, monospace; color: #000080;">df[col]</span>
+      </td>
+      <td style="text-align: center;"><em><span
+            style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Series</span></em>
+      </td>
+    </tr>
+    <tr>
+      <td><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Выбор
+          строки по метке</span></td>
+      <td style="text-align: center;"><span
+          style="font-size: large; font-family: 'courier new', courier, monospace; color: #000080;">df.loc[label]</span>
+      </td>
+      <td style="text-align: center;"><em><span
+            style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Series</span></em>
+      </td>
+    </tr>
+    <tr>
+      <td><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Выбор
+          строки по индексу</span></td>
+      <td style="text-align: center;"><span
+          style="font-size: large; font-family: 'courier new', courier, monospace; color: #000080;">df.iloc[loc]</span>
+      </td>
+      <td style="text-align: center;"><em><span
+            style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Series</span></em>
+      </td>
+    </tr>
+    <tr>
+      <td><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Срез
+          по строкам</span></td>
+      <td style="text-align: center;"><span
+          style="font-size: large; font-family: 'courier new', courier, monospace; color: #000080;">df[0:4]</span>
+      </td>
+      <td style="text-align: center;"><em><span
+            style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">DataFrame</span></em>
+      </td>
+    </tr>
+    <tr>
+      <td><span
+          style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Выбор
+          строк, отвечающих условию</span></td>
+      <td style="text-align: center;"><span
+          style="font-size: large; font-family: 'courier new', courier, monospace; color: #000080;">df[bool_vec]</span>
+      </td>
+      <td style="text-align: center;"><em><span
+            style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">DataFrame</span></em>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Рассмотрим
+    работу с данными операциями на практике. Для начала создадим
+    DataFrame:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; d = {'price':np.array([1, 2, 3]), 'count': np.array([10, 20,
+    30])}</p>
+  <p>&gt;&gt;&gt; df = pd.DataFrame(d, index=['a', 'b', 'c'])</p>
+  <p>&gt;&gt;&gt; print(df)</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">price
+    count a b c 1 10 2 20 3 30 </span></p>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Операция
+    выборки отдельных столбцов из таблицы данных осуществляется следующим
+    образом:<br></span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; df['count']</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">a
+    10 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">b 20</span>
+</p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">c
+    30 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Name:
+    count, dtype: int32</span></p>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Операция
+    извлечения строки по её индексной метке:<br></span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; df.loc['a']</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">price
+    1 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">count
+    10 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Name:
+    a, dtype: int32 </span></p>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">О</span><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">перация
+    выбора строки по индексу:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; df.iloc[1]</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">price
+    2</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">count
+    20 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Name:
+    b, dtype: int32 </span></p>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Операция
+    создания среза по строкам:</span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; df[0:2]</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">price
+    count</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">a
+    1 10 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">b
+    2 20 </span></p>
+<p></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">Операция
+    отбора строк, отвечающих заданному условию: </span></p>
+<div class="alert alert-primary" role="alert">
+  <p>&gt;&gt;&gt; df[df['count'] &gt;= 20]</p>
+</div>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">Результат
+    выполнения:</span></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;">price
+    count</span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">b
+    2 20 </span></p>
+<p><span
+    style="font-size: large; font-family: verdana, arial, helvetica, sans-serif;">c
+    3 30</span></p>
+<p><strong><span
+      style="font-size: large; font-family: verdana, arial, helvetica, sans-serif; color: #c8196b;">Выполните
+      упражнения по<span style="color: #000080;"> <a
+          href="https://colab.research.google.com/drive/1uM_LAmy9hxxQTsnuJnqORpKXtlz7FopB?usp=sharing">ссылке</a></span></span></strong>
+</p>
+<p dir="ltr"></p>
+<p><span
+    style="font-family: verdana, arial, helvetica, sans-serif; font-size: large;"> </span>
+</p>
