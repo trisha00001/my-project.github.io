@@ -3,271 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Тест по информатике</title>
+  <title>Моя личная страница</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 24px;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
       line-height: 1.6;
-      background: #f7f7fb;
+      background: #f5f5f5;
       color: #222;
     }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
     h1 {
-      text-align: center;
+      color: #2d6cdf;
     }
-    .quiz-container {
-      background: #fff;
-      padding: 24px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    }
-    .question {
-      margin-bottom: 24px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid #e6e6e6;
-    }
-    .question:last-child {
-      border-bottom: none;
-    }
-    .question-title {
+
+    a {
+      color: #2d6cdf;
+      text-decoration: none;
       font-weight: bold;
-      margin-bottom: 10px;
     }
-    .options label {
-      display: block;
-      margin: 8px 0;
-      padding: 8px 10px;
-      border-radius: 8px;
-      cursor: pointer;
+
+    a:hover {
+      text-decoration: underline;
     }
-    .options label:hover {
-      background: #f2f4f8;
-    }
-    .btn {
+
+    .links a {
       display: inline-block;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-right: 10px;
-    }
-    .btn-primary {
-      background: #2563eb;
-      color: #fff;
-    }
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    .result {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 12px;
-      background: #eef6ff;
-      display: none;
-    }
-    .correct {
-      color: #15803d;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-    .incorrect {
-      color: #b91c1c;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-    .muted {
-      color: #6b7280;
-      font-size: 14px;
+      margin-right: 15px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <h1>📘 Тест по информатике</h1>
-    <p>Выберите один правильный ответ для каждого вопроса и нажмите <b>«Проверить»</b>.</p>
+  <div class="card">
+    <h1>Привет, я Иван</h1>
 
-    <form id="quizForm"></form>
+    <p>
+      Я начинающий программист. Изучаю Python, Pandas, веб-разработку
+      и создаю свои проекты.
+    </p>
 
-    <button class="btn btn-primary" onclick="checkAnswers()">Проверить</button>
-    <button class="btn btn-secondary" onclick="resetQuiz()" type="button">Сбросить</button>
+    <h2>Обо мне</h2>
+    <p>
+      Здесь можно написать, кто ты, чем занимаешься, какие технологии изучаешь
+      и какие проекты делаешь.
+    </p>
 
-    <div id="result" class="result"></div>
+    <h2>Мои навыки</h2>
+    <ul>
+      <li>Python</li>
+      <li>Pandas</li>
+      <li>HTML и CSS</li>
+      <li>GitHub</li>
+    </ul>
+
+    <h2>Контакты</h2>
+    <div class="links">
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      <a href="https://t.me/yourtelegram" target="_blank">Telegram</a>
+      <a href="mailto:youremail@example.com">Email</a>
+    </div>
   </div>
-
-  <script>
-    const questions = [
-      {
-        q: "Какое устройство используется для подключения к интернету?",
-        options: ["Принтер", "Сканер", "Маршрутизатор", "Монитор"],
-        answer: 2
-      },
-      {
-        q: "Что является энергонезависимой памятью?",
-        options: ["RAM", "Cache", "ROM", "Register"],
-        answer: 2
-      },
-      {
-        q: "Правильный порядок единиц информации:",
-        options: ["Byte → Bit → KB → MB", "Bit → Byte → KB → MB", "KB → Bit → Byte → MB", "MB → KB → Byte → Bit"],
-        answer: 1
-      },
-      {
-        q: "Что делает операционная система?",
-        options: ["Создает сайты", "Управляет ресурсами компьютера", "Пишет программы", "Ускоряет интернет"],
-        answer: 1
-      },
-      {
-        q: "Что означает multitasking?",
-        options: ["Выполнение одной программы", "Выполнение нескольких программ одновременно", "Быстрый интернет", "Хранение файлов"],
-        answer: 1
-      },
-      {
-        q: "Какой язык является объектно-ориентированным?",
-        options: ["HTML", "Java", "SQL", "Assembly"],
-        answer: 1
-      },
-      {
-        q: "Какой оператор используется для объявления функции в Python?",
-        options: ["func", "define", "def", "function"],
-        answer: 2
-      },
-      {
-        q: "Что выведет код: print(4 + 3 % 5)?",
-        options: ["7", "2", "4", "1"],
-        answer: 0
-      },
-      {
-        q: "Что такое переменная?",
-        options: ["Функция", "Хранилище данных", "Тип данных", "Команда"],
-        answer: 1
-      },
-      {
-        q: "Что такое компилятор?",
-        options: ["Программа для написания кода", "Программа для перевода кода в машинный язык", "Браузер", "ОС"],
-        answer: 1
-      },
-      {
-        q: "Что такое IP-адрес?",
-        options: ["Имя файла", "Уникальный адрес устройства в сети", "Пароль", "Программа"],
-        answer: 1
-      },
-      {
-        q: "Что делает протокол TCP?",
-        options: ["Шифрует данные", "Обеспечивает надежную передачу данных", "Ускоряет интернет", "Хранит данные"],
-        answer: 1
-      },
-      {
-        q: "Минимальный размер Ethernet-кадра называется:",
-        options: ["Mini frame", "Short frame", "Runt frame", "Small frame"],
-        answer: 2
-      },
-      {
-        q: "Какая структура данных работает по принципу LIFO?",
-        options: ["Queue", "Stack", "Tree", "Graph"],
-        answer: 1
-      },
-      {
-        q: "Сложность бинарного поиска:",
-        options: ["O(n)", "O(log n)", "O(n²)", "O(1)"],
-        answer: 1
-      },
-      {
-        q: "Что такое алгоритм?",
-        options: ["Программа", "Последовательность шагов решения задачи", "Переменная", "Компилятор"],
-        answer: 1
-      },
-      {
-        q: "Что важнее всего для программиста?",
-        options: ["Запоминание синтаксиса", "Логическое мышление", "Быстрая печать", "Интернет"],
-        answer: 1
-      },
-      {
-        q: "Что такое искусственный интеллект (AI)?",
-        options: ["Вид базы данных", "Подмножество машинного обучения", "Область, включающая ML", "Язык программирования"],
-        answer: 2
-      },
-      {
-        q: "Что такое база данных?",
-        options: ["Программа", "Организованное хранилище данных", "Алгоритм", "ОС"],
-        answer: 1
-      },
-      {
-        q: "Что делает кэш-память?",
-        options: ["Хранит файлы", "Ускоряет доступ к данным", "Управляет сетью", "Хранит ОС"],
-        answer: 1
-      }
-    ];
-
-    const form = document.getElementById('quizForm');
-
-    questions.forEach((item, index) => {
-      const block = document.createElement('div');
-      block.className = 'question';
-      block.innerHTML = `
-        <div class="question-title">${index + 1}. ${item.q}</div>
-        <div class="options">
-          ${item.options.map((option, i) => `
-            <label>
-              <input type="radio" name="q${index}" value="${i}"> ${option}
-            </label>
-          `).join('')}
-        </div>
-        <div id="feedback-${index}" class="muted"></div>
-      `;
-      form.appendChild(block);
-    });
-
-    function checkAnswers() {
-      let score = 0;
-
-      questions.forEach((item, index) => {
-        const selected = document.querySelector(`input[name="q${index}"]:checked`);
-        const feedback = document.getElementById(`feedback-${index}`);
-
-        if (selected) {
-          const value = Number(selected.value);
-          if (value === item.answer) {
-            score++;
-            feedback.innerHTML = '<span class="correct">✔ Верно</span>';
-          } else {
-            feedback.innerHTML = `<span class="incorrect">✘ Неверно</span><br>Правильный ответ: <b>${item.options[item.answer]}</b>`;
-          }
-        } else {
-          feedback.innerHTML = `<span class="incorrect">✘ Ответ не выбран</span><br>Правильный ответ: <b>${item.options[item.answer]}</b>`;
-        }
-      });
-
-      const percent = Math.round((score / questions.length) * 100);
-      const result = document.getElementById('result');
-      result.style.display = 'block';
-      result.innerHTML = `
-        <h2>Результат</h2>
-        <p><b>Баллы:</b> ${score} из ${questions.length}</p>
-        <p><b>Процент:</b> ${percent}%</p>
-        <p><b>Оценка:</b> ${getGrade(percent)}</p>
-      `;
-      result.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function getGrade(percent) {
-      if (percent >= 90) return '5 (отлично)';
-      if (percent >= 75) return '4 (хорошо)';
-      if (percent >= 50) return '3 (удовлетворительно)';
-      return '2 (неудовлетворительно)';
-    }
-
-    function resetQuiz() {
-      document.getElementById('quizForm').reset();
-      document.getElementById('result').style.display = 'none';
-      questions.forEach((_, index) => {
-        document.getElementById(`feedback-${index}`).innerHTML = '';
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
 </body>
 </html>
