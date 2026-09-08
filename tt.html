@@ -338,6 +338,41 @@
       .topbar-inner{min-height:58px}
       .layout{padding:20px 16px 44px}
     }
+    
+        .gallery {
+            max-width: 1000px;
+            margin: 30px auto;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 300px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 12px
+                        rgba(0,0,0,0.2);
+
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 700px) {
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+        }
   </style>
 </head>
 <body>
@@ -377,8 +412,29 @@
   <main id="content">
     <div class="breadcrumb">Главная → Web → Технологии веб-разработки</div>
     <h1>Технологии веб-разработки</h1>
-    <div class="meta">Русская учебная версия • адаптировано по материалу о Web Development Technologies</div>
+<div class="gallery">
 
+    <img
+        src="https://github.com/trisha00001/my-project.github.io/blob/main/w1.png?raw=true"
+        alt="Изображение 1"
+    >
+
+    <img
+        src="https://github.com/trisha00001/my-project.github.io/blob/main/w2.png?raw=true"
+        alt="Изображение 2"
+    >
+
+    <img
+        src="https://github.com/trisha00001/my-project.github.io/blob/main/w3.png?raw=true"
+        alt="Изображение 3"
+    >
+
+    <img
+        src="https://github.com/trisha00001/my-project.github.io/blob/main/w4.png?raw=true"
+        alt="Изображение 4"
+    >
+
+</div>
     <section id="intro">
       <p class="lead">
         Веб-разработка — это создание и сопровождение сайтов и веб-приложений,
