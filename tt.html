@@ -1,11 +1,616 @@
 <!DOCTYPE html>
-<html>
- <head>
-  <meta charset="utf-8">
-  <title>Как создать сайт с нуля - "Нубекс"</title>
- </head>
- <body>
-  <h1>Мой первый сайт в блокноте HTML</h1>
-  <p>Привет! Это мой первый сайт.</p>
- </body>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Технологии веб-разработки — русская версия</title>
+  <style>
+    :root{
+      --green:#2f8d46;
+      --green-dark:#216b35;
+      --text:#202124;
+      --muted:#667085;
+      --line:#e5e7eb;
+      --soft:#f7f8fa;
+      --card:#ffffff;
+      --blue:#2563eb;
+      --orange:#f59e0b;
+      --violet:#7c3aed;
+      --red:#dc2626;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:#fff;
+      line-height:1.65;
+    }
+
+    a{color:var(--green-dark);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+    }
+
+    .topbar-inner{
+      max-width:1280px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      gap:22px;
+      min-height:66px;
+      padding:0 22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:20px;
+      font-weight:800;
+      color:#111827;
+      white-space:nowrap;
+    }
+
+    .brand-mark{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--green);
+      color:#fff;
+      font-weight:900;
+    }
+
+    .nav{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      font-size:14px;
+      color:#374151;
+    }
+
+    .search{
+      margin-left:auto;
+      width:min(290px,34vw);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 14px;
+      outline:none;
+      background:#f9fafb;
+    }
+
+    .layout{
+      max-width:1280px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:245px minmax(0,1fr);
+      gap:34px;
+      padding:30px 22px 60px;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:92px;
+      align-self:start;
+      border-right:1px solid var(--line);
+      padding-right:20px;
+      max-height:calc(100vh - 110px);
+      overflow:auto;
+    }
+
+    .sidebar h3{
+      margin:0 0 12px;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:#6b7280;
+    }
+
+    .sidebar a{
+      display:block;
+      padding:8px 10px;
+      border-radius:8px;
+      color:#374151;
+      font-size:14px;
+    }
+
+    .sidebar a:hover{
+      background:#f0f7f2;
+      color:var(--green-dark);
+      text-decoration:none;
+    }
+
+    main{
+      min-width:0;
+      max-width:900px;
+    }
+
+    .breadcrumb{
+      font-size:13px;
+      color:#6b7280;
+      margin-bottom:16px;
+    }
+
+    h1{
+      font-size:clamp(32px,5vw,48px);
+      line-height:1.15;
+      margin:8px 0 10px;
+      color:#111827;
+    }
+
+    h2{
+      font-size:28px;
+      margin:42px 0 14px;
+      padding-bottom:8px;
+      border-bottom:2px solid #edf2ef;
+      color:#111827;
+    }
+
+    h3{
+      font-size:21px;
+      margin:28px 0 10px;
+      color:#1f2937;
+    }
+
+    .meta{
+      color:#6b7280;
+      font-size:14px;
+      margin-bottom:22px;
+    }
+
+    .lead{
+      font-size:18px;
+      color:#374151;
+      background:#f7fbf8;
+      border-left:4px solid var(--green);
+      padding:18px 20px;
+      border-radius:0 10px 10px 0;
+    }
+
+    .flow{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin:24px 0 6px;
+    }
+
+    .flow .step{
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      text-align:center;
+      position:relative;
+      min-height:110px;
+    }
+
+    .flow .step:not(:last-child)::after{
+      content:"→";
+      position:absolute;
+      right:-15px;
+      top:35%;
+      font-size:24px;
+      color:#9ca3af;
+      z-index:2;
+    }
+
+    .icon{
+      font-size:28px;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin:18px 0;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 4px 18px rgba(17,24,39,.04);
+    }
+
+    .card h3{margin-top:0}
+    .tag{
+      display:inline-block;
+      padding:4px 9px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+      background:#edf8f0;
+      color:var(--green-dark);
+    }
+
+    ul,ol{padding-left:23px}
+    li{margin:7px 0}
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:12px;
+      margin:18px 0;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:640px;
+    }
+
+    th,td{
+      padding:13px 14px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f8fafc;
+      color:#374151;
+      font-size:14px;
+    }
+
+    tr:last-child td{border-bottom:0}
+
+    .note{
+      background:#fff8e8;
+      border:1px solid #fde7ad;
+      padding:16px 18px;
+      border-radius:12px;
+      margin:18px 0;
+    }
+
+    code{
+      background:#f3f4f6;
+      padding:2px 6px;
+      border-radius:6px;
+      font-family:"SFMono-Regular",Consolas,monospace;
+      font-size:.95em;
+    }
+
+    pre{
+      background:#111827;
+      color:#f9fafb;
+      padding:18px;
+      border-radius:12px;
+      overflow:auto;
+    }
+
+    pre code{
+      background:transparent;
+      padding:0;
+      color:inherit;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      padding:30px 22px;
+      color:#6b7280;
+      font-size:14px;
+      text-align:center;
+      background:#fafafa;
+    }
+
+    .pill-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .pill{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 10px;
+      background:#fff;
+      font-size:13px;
+    }
+
+    @media(max-width:900px){
+      .layout{grid-template-columns:1fr}
+      .sidebar{display:none}
+      .cards{grid-template-columns:1fr}
+      .flow{grid-template-columns:1fr 1fr}
+      .flow .step::after{display:none}
+      .search{display:none}
+    }
+
+    @media(max-width:560px){
+      .flow{grid-template-columns:1fr}
+      .nav{display:none}
+      .topbar-inner{min-height:58px}
+      .layout{padding:20px 16px 44px}
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      WebTech RU
+    </div>
+    <nav class="nav">
+      <a href="#basics">Основы</a>
+      <a href="#frontend">Frontend</a>
+      <a href="#backend">Backend</a>
+      <a href="#databases">Базы данных</a>
+      <a href="#api">API</a>
+    </nav>
+    <input class="search" type="search" placeholder="Поиск по странице…" oninput="searchText(this.value)">
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Содержание</h3>
+    <a href="#intro">Веб-разработка</a>
+    <a href="#basics">Основы</a>
+    <a href="#frontend">Frontend-разработка</a>
+    <a href="#backend">Backend-разработка</a>
+    <a href="#languages">Серверные языки</a>
+    <a href="#databases">Базы данных</a>
+    <a href="#api">API и форматы данных</a>
+    <a href="#deployment">Контроль версий и деплой</a>
+    <a href="#graphics">Графика</a>
+    <a href="#summary">Итоги</a>
+  </aside>
+
+  <main id="content">
+    <div class="breadcrumb">Главная → Web → Технологии веб-разработки</div>
+    <h1>Технологии веб-разработки</h1>
+    <div class="meta">Русская учебная версия • адаптировано по материалу о Web Development Technologies</div>
+
+    <section id="intro">
+      <p class="lead">
+        Веб-разработка — это создание и сопровождение сайтов и веб-приложений,
+        работающих через Интернет. Пользователь открывает сайт в браузере,
+        браузер отправляет запрос серверу, сервер обрабатывает его, при необходимости
+        обращается к базе данных и возвращает результат пользователю.
+      </p>
+
+      <div class="flow">
+        <div class="step"><span class="icon">👤</span><b>Пользователь</b><br><small>вводит адрес или нажимает ссылку</small></div>
+        <div class="step"><span class="icon">🌐</span><b>Браузер</b><br><small>формирует HTTP/HTTPS-запрос</small></div>
+        <div class="step"><span class="icon">🖥️</span><b>Веб-сервер</b><br><small>обрабатывает запрос</small></div>
+        <div class="step"><span class="icon">📄</span><b>Ответ</b><br><small>страница или данные возвращаются клиенту</small></div>
+      </div>
+    </section>
+
+    <section id="basics">
+      <h2>Основы веб-разработки</h2>
+      <p>
+        Современное веб-приложение обычно разделяют на две основные части:
+        <b>Frontend</b> — всё, что работает в браузере пользователя,
+        и <b>Backend</b> — серверную часть, где выполняется логика приложения,
+        обрабатываются данные и организуется доступ к хранилищам.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Frontend</span>
+          <h3>Клиентская часть</h3>
+          <p>Интерфейс, разметка, стили, интерактивность, формы и работа с API.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Backend</span>
+          <h3>Серверная часть</h3>
+          <p>Бизнес-логика, маршруты, аутентификация, обработка запросов и данных.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Data</span>
+          <h3>Хранение данных</h3>
+          <p>SQL- и NoSQL-базы данных, кэширование и организация доступа к информации.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="frontend">
+      <h2>Frontend-разработка</h2>
+      <p>
+        Frontend формирует то, что видит пользователь в браузере. Три базовые технологии
+        веб-интерфейса — HTML, CSS и JavaScript.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Технология</th><th>Назначение</th><th>Пример</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>HTML</b></td>
+              <td>Создаёт структуру страницы: заголовки, абзацы, изображения, ссылки, формы.</td>
+              <td><code>&lt;h1&gt;Заголовок&lt;/h1&gt;</code></td>
+            </tr>
+            <tr>
+              <td><b>CSS</b></td>
+              <td>Отвечает за внешний вид: цвета, шрифты, сетки, адаптивность и оформление.</td>
+              <td><code>display: grid;</code></td>
+            </tr>
+            <tr>
+              <td><b>JavaScript</b></td>
+              <td>Добавляет интерактивность, обработку событий и обмен данными с сервером.</td>
+              <td><code>fetch('/api/data')</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="backend">
+      <h2>Backend-разработка</h2>
+      <p>
+        Backend работает «за сценой»: принимает запросы, выполняет бизнес-логику,
+        проверяет права доступа, взаимодействует с базами данных и формирует ответы.
+      </p>
+
+      <h3 id="languages">Популярные серверные языки и платформы</h3>
+      <ul>
+        <li><b>JavaScript / Node.js</b> — позволяет использовать JavaScript на сервере.</li>
+        <li><b>Python</b> — часто применяется вместе с Django, Flask и FastAPI.</li>
+        <li><b>PHP</b> — широко используется для динамических веб-сайтов и CMS.</li>
+        <li><b>Java</b> — популярна в крупных и корпоративных веб-системах.</li>
+        <li><b>Ruby</b> — известен лаконичным синтаксисом и экосистемой Ruby on Rails.</li>
+        <li><b>Go</b> — ориентирован на производительность и масштабируемые сервисы.</li>
+        <li><b>C#</b> — применяется в экосистеме .NET и ASP.NET Core.</li>
+      </ul>
+    </section>
+
+    <section id="databases">
+      <h2>Базы данных</h2>
+      <p>
+        База данных хранит сведения о пользователях, товарах, заказах, транзакциях
+        и других объектах веб-приложения.
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <span class="tag">SQL</span>
+          <h3>Реляционные базы</h3>
+          <p>Данные организованы в таблицы со строками и столбцами.</p>
+          <div class="pill-list">
+            <span class="pill">MySQL</span>
+            <span class="pill">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">NoSQL</span>
+          <h3>Документные и распределённые</h3>
+          <p>Подходят для гибких схем и больших объёмов разнородных данных.</p>
+          <div class="pill-list">
+            <span class="pill">MongoDB</span>
+            <span class="pill">Cassandra</span>
+          </div>
+        </div>
+        <div class="card">
+          <span class="tag">Cache</span>
+          <h3>Данные в памяти</h3>
+          <p>Используются для кэширования и быстрых операций в реальном времени.</p>
+          <div class="pill-list">
+            <span class="pill">Redis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>Важно:</b> система управления базами данных помогает организовать,
+        защищать и эффективно получать данные приложения.
+      </div>
+    </section>
+
+    <section id="api">
+      <h2>API и форматы обмена данными</h2>
+      <p>
+        Frontend, Backend и внешние сервисы взаимодействуют через API.
+        Для передачи информации используются стандартизированные форматы.
+      </p>
+
+      <h3>JSON</h3>
+      <p>Компактный формат обмена данными, широко применяемый в веб-API.</p>
+      <pre><code>{
+  "id": 1,
+  "name": "Ноутбук",
+  "price": 350000
+}</code></pre>
+
+      <h3>XML</h3>
+      <p>
+        Текстовый формат на основе разметки, который описывает структуру данных
+        с помощью тегов и может использоваться при интеграции различных систем.
+      </p>
+    </section>
+
+    <section id="deployment">
+      <h2>Контроль версий и развёртывание</h2>
+      <p>
+        Разработка веб-приложения включает не только написание кода.
+        Важно отслеживать изменения, работать в команде и публиковать приложение в Интернете.
+      </p>
+      <ol>
+        <li><b>Контроль версий</b> — хранение истории изменений проекта, обычно с помощью Git.</li>
+        <li><b>Развёртывание</b> — публикация приложения на сервере или облачной платформе.</li>
+        <li><b>Автоматизация</b> — CI/CD-процессы для сборки, тестирования и публикации приложения.</li>
+      </ol>
+    </section>
+
+    <section id="graphics">
+      <h2>Графика в веб-приложениях</h2>
+      <p>
+        Графические элементы помогают визуально передавать информацию и делают интерфейс понятнее.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Canvas</span>
+          <h3>HTML Canvas</h3>
+          <p>Область для программного рисования графики с помощью JavaScript.</p>
+        </div>
+        <div class="card">
+          <span class="tag">SVG</span>
+          <h3>Векторная графика</h3>
+          <p>Масштабируемые изображения, описываемые в XML-формате.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Responsive</span>
+          <h3>Адаптивность</h3>
+          <p>Графика и интерфейс должны корректно отображаться на разных размерах экранов.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="summary">
+      <h2>Итоги</h2>
+      <p>
+        Веб-разработка объединяет клиентские и серверные технологии, базы данных,
+        API, инструменты контроля версий и процессы развёртывания. В совокупности
+        эти компоненты образуют технологический стек современного веб-приложения.
+      </p>
+      <div class="pill-list">
+        <span class="pill">HTML</span>
+        <span class="pill">CSS</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">Backend</span>
+        <span class="pill">SQL / NoSQL</span>
+        <span class="pill">REST API</span>
+        <span class="pill">JSON</span>
+        <span class="pill">Git</span>
+        <span class="pill">Deployment</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="footer">
+  Учебная русская адаптация темы «Web Development Technologies». 
+  Страница создана как самостоятельный материал и не является копией оригинального сайта.
+</footer>
+
+<script>
+function searchText(value){
+  const content = document.getElementById('content');
+  const q = value.trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(section => {
+    if(!q){ section.style.display=''; return; }
+    section.style.display = section.innerText.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+</script>
+
+</body>
 </html>
