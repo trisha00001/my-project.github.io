@@ -1,21 +1,134 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Мои проекты</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторная работа: Создание простой веб-страницы</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280;--primary:#1d4ed8;--accent:#0f766e;--border:#e5e7eb;--code:#111827}
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+    .container{max-width:1100px;margin:0 auto;padding:32px 20px 60px}
+    header{background:linear-gradient(135deg,#1d4ed8,#0f766e);color:#fff;padding:42px 20px;margin-bottom:28px}
+    header .inner{max-width:1100px;margin:auto} header h1{margin:0 0 10px;font-size:38px;line-height:1.2} header p{margin:0;font-size:18px;opacity:.95}
+    section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:22px;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+    h2{margin-top:0;color:var(--primary);font-size:26px} h3{color:var(--accent);margin-top:24px} ul,ol{padding-left:24px} li{margin:6px 0}
+    .goal{background:#eff6ff;border-left:5px solid var(--primary)} .task{background:#f0fdfa;border-left:5px solid var(--accent)}
+    .note{background:#fff7ed;border:1px solid #fed7aa;padding:14px 16px;border-radius:10px;margin:14px 0}
+    code{font-family:Consolas,monospace;background:#eef2f7;padding:2px 6px;border-radius:5px}
+    pre{background:var(--code);color:#f9fafb;padding:18px;border-radius:10px;overflow:auto;font-size:14px;line-height:1.5} pre code{background:transparent;padding:0;color:inherit}
+    table{width:100%;border-collapse:collapse;margin-top:14px} th,td{border:1px solid var(--border);padding:10px 12px;text-align:left} th{background:#f3f4f6}
+    .checklist{columns:2;column-gap:28px} footer{text-align:center;color:var(--muted);padding:16px;font-size:14px}
+    @media(max-width:700px){header h1{font-size:30px}.checklist{columns:1}section{padding:18px}}
+  </style>
 </head>
 <body>
-  <h1>Мои проекты</h1>
+<header><div class="inner"><h1>Лабораторная работа</h1><p>Тема: Создание простой веб-страницы средствами HTML и CSS</p></div></header>
+<div class="container">
+<section class="goal"><h2>1. Цель работы</h2><p>Познакомиться со структурой HTML-документа и научиться создавать простую одностраничную веб-страницу с использованием основных HTML-тегов и базовых CSS-свойств.</p></section>
+<section><h2>2. Задачи лабораторной работы</h2><ul><li>изучить структуру HTML-документа;</li><li>научиться создавать HTML-файл;</li><li>использовать заголовки и текстовые абзацы;</li><li>создавать маркированные списки;</li><li>добавлять изображения;</li><li>создавать гиперссылки;</li><li>добавлять кнопки;</li><li>применять простые CSS-стили;</li><li>открывать созданную страницу в браузере и проверять результат.</li></ul></section>
+<section><h2>3. Теоретическая часть</h2><h3>Что такое HTML</h3><p><b>HTML (HyperText Markup Language)</b> — язык гипертекстовой разметки, предназначенный для создания структуры веб-страниц.</p><p>HTML определяет заголовки, текст, изображения, ссылки, списки, таблицы, формы и кнопки.</p><pre><code>&lt;h1&gt;Моя первая страница&lt;/h1&gt;</code></pre><h3>Структура HTML-документа</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Название страницы&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Содержимое страницы
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><ul><li><code>&lt;!DOCTYPE html&gt;</code> — сообщает браузеру, что используется современный HTML.</li><li><code>&lt;html&gt;</code> — главный элемент документа.</li><li><code>&lt;head&gt;</code> — содержит служебную информацию.</li><li><code>&lt;meta charset="UTF-8"&gt;</code> — задаёт кодировку.</li><li><code>&lt;title&gt;</code> — название страницы во вкладке браузера.</li><li><code>&lt;body&gt;</code> — видимое содержимое страницы.</li></ul><h3>Основные теги</h3><pre><code>&lt;h1&gt;Главный заголовок&lt;/h1&gt;
+&lt;h2&gt;Заголовок раздела&lt;/h2&gt;
+&lt;p&gt;Текст абзаца&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;Пункт 1&lt;/li&gt;
+    &lt;li&gt;Пункт 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;img src="photo.jpg" alt="Фотография"&gt;
+&lt;a href="https://www.wikipedia.org"&gt;Ссылка&lt;/a&gt;
+&lt;button&gt;Связаться со мной&lt;/button&gt;</code></pre></section>
+<section><h2>4. Что такое CSS</h2><p><b>CSS (Cascading Style Sheets)</b> — каскадные таблицы стилей, используемые для оформления HTML-страниц.</p><ul><li>цвет текста и фона;</li><li>шрифты;</li><li>размеры элементов;</li><li>отступы;</li><li>рамки;</li><li>внешний вид кнопок.</li></ul><pre><code>body {
+    background-color: #f2f2f2;
+    font-family: Arial;
+}
 
-  <p>Здесь будет список моих проектов.</p>
+h1 {
+    color: darkblue;
+}</code></pre></section>
+<section class="task"><h2>5. Практическое задание</h2><p>Создайте небольшой одностраничный сайт <b>«Обо мне»</b>.</p><ol><li>заголовок с вашим именем;</li><li>раздел <b>«Обо мне»</b>;</li><li>текст о себе из 3–5 предложений;</li><li>раздел <b>«Мои интересы»</b>;</li><li>список минимум из трёх пунктов;</li><li>одно изображение;</li><li>ссылку на любой полезный сайт;</li><li>кнопку <b>«Связаться со мной»</b>;</li><li>изменённый цвет фона страницы;</li><li>изменённый цвет основного заголовка.</li></ol></section>
+<section><h2>6. Создание проекта</h2><pre><code>about-me/
+│
+├── index.html
+└── photo.jpg</code></pre></section>
+<section><h2>7. Пример HTML-страницы</h2><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Обо мне&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: darkblue;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Иван Иванов&lt;/h1&gt;
+    &lt;h2&gt;Обо мне&lt;/h2&gt;
+    &lt;p&gt;
+        Меня зовут Иван. Я изучаю создание сайтов.
+        Мне нравится программирование и современные технологии.
+        В свободное время я занимаюсь спортом и слушаю музыку.
+    &lt;/p&gt;
+    &lt;h2&gt;Мои интересы&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;li&gt;Программирование&lt;/li&gt;
+        &lt;li&gt;Спорт&lt;/li&gt;
+        &lt;li&gt;Музыка&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;img src="photo.jpg" width="250" alt="Моя фотография"&gt;
+    &lt;p&gt;
+        &lt;a href="https://www.wikipedia.org" target="_blank"&gt;Перейти на Wikipedia&lt;/a&gt;
+    &lt;/p&gt;
+    &lt;button&gt;Связаться со мной&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></section>
+<section><h2>8. Улучшенное оформление</h2><pre><code>body {
+    background-color: #f2f6fa;
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 40px;
+    line-height: 1.6;
+}
 
-  <ul>
-    <li>Проект 1: анализ данных на Python</li>
-    <li>Проект 2: личный сайт</li>
-    <li>Проект 3: приложение на C#</li>
-  </ul>
+h1 { color: #173b70; }
+h2 { color: #2d5f9a; }
+img { width: 250px; border-radius: 15px; }
 
-  <a href="index.html">← Назад на главную</a>
+button {
+    background-color: #173b70;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover { background-color: #2d5f9a; }</code></pre></section>
+<section><h2>9. Самостоятельное задание</h2><p>Измените пример и создайте свою страницу <b>«Обо мне»</b>.</p><div class="checklist"><p>✓ изменить имя;</p><p>✓ изменить текст о себе;</p><p>✓ изменить список интересов;</p><p>✓ добавить своё изображение;</p><p>✓ указать полезную ссылку;</p><p>✓ изменить цвет фона;</p><p>✓ изменить цвет заголовка;</p><p>✓ оформить кнопку.</p></div><table><thead><tr><th>Элемент</th><th>Минимальное количество</th></tr></thead><tbody><tr><td><code>&lt;h1&gt;</code></td><td>1</td></tr><tr><td><code>&lt;h2&gt;</code></td><td>2</td></tr><tr><td><code>&lt;p&gt;</code></td><td>1</td></tr><tr><td><code>&lt;li&gt;</code></td><td>3</td></tr><tr><td><code>&lt;img&gt;</code></td><td>1</td></tr><tr><td><code>&lt;a&gt;</code></td><td>1</td></tr><tr><td><code>&lt;button&gt;</code></td><td>1</td></tr></tbody></table></section>
+<section><h2>10. Дополнительное задание</h2><p>Добавьте раздел <b>«Мои любимые фильмы»</b> или <b>«Мои любимые книги»</b>.</p><pre><code>&lt;h2&gt;Мои любимые фильмы&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;Интерстеллар&lt;/li&gt;
+    &lt;li&gt;Начало&lt;/li&gt;
+    &lt;li&gt;Матрица&lt;/li&gt;
+&lt;/ul&gt;</code></pre><div class="note">Также можно самостоятельно изменить оформление кнопки и добавить эффект при наведении.</div></section>
+<section><h2>11. Результат лабораторной работы</h2><p>После выполнения лабораторной работы студент должен уметь:</p><ul><li>создавать HTML-файл;</li><li>понимать структуру HTML-документа;</li><li>открывать HTML-файл в браузере;</li><li>использовать теги <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;p&gt;</code>;</li><li>создавать списки <code>&lt;ul&gt;</code> и <code>&lt;li&gt;</code>;</li><li>добавлять изображения <code>&lt;img&gt;</code>;</li><li>создавать ссылки <code>&lt;a&gt;</code>;</li><li>добавлять кнопки <code>&lt;button&gt;</code>;</li><li>использовать атрибуты <code>src</code>, <code>href</code>, <code>alt</code>;</li><li>изменять оформление страницы с помощью CSS.</li></ul></section>
+<section><h2>12. Контрольные вопросы</h2><ol><li>Что такое HTML?</li><li>Для чего используется тег <code>&lt;html&gt;</code>?</li><li>Для чего предназначен раздел <code>&lt;head&gt;</code>?</li><li>Что находится внутри <code>&lt;body&gt;</code>?</li><li>Для чего используется <code>&lt;h1&gt;</code>?</li><li>Чем <code>&lt;h1&gt;</code> отличается от <code>&lt;h2&gt;</code>?</li><li>Для чего используется тег <code>&lt;p&gt;</code>?</li><li>Какие теги используются для создания маркированного списка?</li><li>Для чего предназначен тег <code>&lt;img&gt;</code>?</li><li>Что означает атрибут <code>src</code>?</li><li>Для чего используется <code>alt</code>?</li><li>Как создать гиперссылку?</li><li>Для чего используется атрибут <code>href</code>?</li><li>Как создать кнопку?</li><li>Что такое CSS?</li><li>Как изменить цвет фона страницы?</li><li>Как изменить цвет текста?</li><li>Что делает свойство <code>font-family</code>?</li><li>Для чего используется <code>button:hover</code>?</li><li>Как открыть HTML-файл в браузере?</li></ol></section>
+<section><h2>13. Требования к отчёту</h2><ul><li>тема лабораторной работы;</li><li>цель;</li><li>краткие теоретические сведения;</li><li>исходный HTML-код;</li><li>CSS-код;</li><li>скриншот созданной страницы;</li><li>описание выполненного дополнительного задания;</li><li>ответы на контрольные вопросы;</li><li>вывод.</li></ul><div class="note"><b>Пример вывода:</b><br>В ходе лабораторной работы была изучена структура HTML-документа и основные HTML-теги. Была создана одностраничная веб-страница «Обо мне», содержащая заголовки, текст, список, изображение, ссылку и кнопку. Также были изучены базовые возможности CSS для изменения цвета фона, текста и оформления элементов страницы.</div></section>
+</div>
+<footer>Лабораторная работа по дисциплине «Web-технологии»</footer>
 </body>
 </html>
